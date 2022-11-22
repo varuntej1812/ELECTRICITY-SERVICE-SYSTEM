@@ -1,14 +1,27 @@
 package USER.CUSTOMER;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Random;
 
 public class Bill {
-    private int UniqueNo;
+    private String UniqueNo;
     private String BillId;
     private Double Amount;
     private LocalDate datetime;
     private String Billpaystatus;
+
+    public Bill() {
+
+    }
+
+    public Bill(String uniqueNo, String billId, Double amount, LocalDate datetime, String billpaystatus) {
+        UniqueNo = uniqueNo;
+        BillId = billId;
+        Amount = amount;
+        this.datetime = datetime;
+        Billpaystatus = billpaystatus;
+    }
 
     public String getBillId() {
         return BillId;
@@ -34,24 +47,25 @@ public class Bill {
         this.datetime = localDate;
     }
 
-    public void GenerateBillID(int UniqueNo, LocalDate datetime) {
+    public void GenerateBillID(String UniqueNo, LocalDate datetime) {
         String bId = UniqueNo + "" + datetime;
         setBillId(bId);
+        setDatetime(LocalDate.now());
     }
 
-    // public int[] getBillsArr() {
+    // public String[] getBillsArr() {
     // return billsArr;
     // }
 
-    // public void setBillsArr(int[] billsArr) {
+    // public void setBillsArr(String[] billsArr) {
     // this.billsArr = billsArr;
     // }
 
-    // int[] billsArr = new int[100];
+    // String[] billsArr = new String[100];
 
     public double calculateBill(Customer c) {
-        if (c.getTypeOfConnection() == 0) {
-            float units = new Random().nextInt(2000);
+        if (c.getTypeOfConnection().equalsIgnoreCase("normal")) {
+            float units = new Random().nextInt(1000);
             double billpay = 0;
             if (units < 100) {
                 billpay = units * 1.20;
@@ -67,14 +81,14 @@ public class Bill {
             }
             setAmount(billpay);
             setDatetime(LocalDate.now());
-            // System.out.println("Bill to pay : " + billpay);
+            // System.out.prStringln("Bill to pay : " + billpay);
             return billpay;
         }
 
-        else {
+        else if (c.getTypeOfConnection().equalsIgnoreCase("solar")) {
             double billpay = 0;
-            float unitsCons = new Random().nextInt(2000);
-            float unitsProd = new Random().nextInt(2000);
+            float unitsCons = new Random().nextInt(1000);
+            float unitsProd = new Random().nextInt(1000);
 
             if (unitsCons > unitsProd) {
                 float netUnits;
@@ -101,13 +115,14 @@ public class Bill {
             setDatetime(LocalDate.now());
             return billpay;
         }
+        return 0;
     }
 
-    public int getUniqueNo() {
+    public String getUniqueNo() {
         return UniqueNo;
     }
 
-    public void setUniqueNo(int uniqueNo) {
+    public void setUniqueNo(String uniqueNo) {
         UniqueNo = uniqueNo;
     }
 
@@ -117,5 +132,18 @@ public class Bill {
 
     public void setBillpaystatus(String billpaystatus) {
         Billpaystatus = billpaystatus;
+    }
+
+    public boolean isBillPayed() {
+        if (getBillpaystatus().equalsIgnoreCase("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void prStringbilldetails() throws SQLException{
+  
+
     }
 }

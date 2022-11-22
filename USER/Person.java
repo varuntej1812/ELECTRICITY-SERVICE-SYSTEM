@@ -9,18 +9,31 @@ public abstract class Person {
     private String Street;
     private String City;
     private String TypeOfUser;
-    private boolean LoginStatus;
+    private String Password;
+    private String LoginStatus;
+
+    @Override
+    public String toString() {
+        return "Person [Name=" + Name + ", MobileNumber=" + Mobile_Number + ", HouseNumber=" + House_No + ", Street="
+                + Street
+                + ", City=" + City + ", TypeOfUser=" + TypeOfUser + ",LoginStatus=" + LoginStatus + "]";
+
+    }
 
     public Person() {
 
     }
 
-    public Person(String name, String mobile_Number, String h_No, String street, String city) {
+    public Person(String name, String mobile_Number, String house_No, String street, String city, String typeOfUser,
+            String password, String loginStatus) {
         Name = name;
         Mobile_Number = mobile_Number;
-        House_No = h_No;
+        House_No = house_No;
         Street = street;
         City = city;
+        TypeOfUser = typeOfUser;
+        Password = password;
+        LoginStatus = loginStatus;
     }
 
     public String getName() {
@@ -71,19 +84,29 @@ public abstract class Person {
         TypeOfUser = typeOfUser;
     }
 
-    public boolean isLoginStatus() {
+    public String getLoginStatus() {
         return LoginStatus;
     }
 
-    public void setLoginStatus(boolean loginStatus) {
+    public void setLoginStatus(String loginStatus) {
         LoginStatus = loginStatus;
     }
 
-    
+    public String getPassword() {
+        return Password;
+    }
 
-    public abstract boolean Login(String email, String password) throws SQLException;
-    public abstract boolean Registration() throws SQLException;
-    // public abstract boolean Logout();
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public abstract boolean personLogin(String Mobile_Number, String password) throws SQLException;
+
+    public abstract boolean personLogout(String Mobile_Number) throws SQLException;
+
+    public abstract boolean personRegister(String csv) throws SQLException;
+    // public abstract boolean Registration() throws SQLException;
+
     // public abstract boolean deleteUser() throws SQLException;
 
 }

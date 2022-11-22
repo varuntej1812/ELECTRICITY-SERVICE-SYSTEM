@@ -1,82 +1,108 @@
-package MAIN;
+// package MAIN;
 
-import java.util.Scanner;
+// import java.util.Scanner;
 import USER.CUSTOMER.Customer;
 
 public class UserOutput {
-    private static Scanner scanner = new Scanner(System.in);
+    public static void printHelp() {
+        System.out.println(
+                "***********************************************************************************************************************");
+        System.out.println(
+                "There can be multiple command line arguments, be sure first argument always refers to the operation you want to perform");
+        System.out.println("For Example : login 'useremail' 'password'");
+        System.out.println("Below are some command line arguments you can use : ");
+        System.out.println("login 'useremail' 'password'");
+        System.out.println("login 'useremail'");
+        System.out.println("logout 'useremail' ");
+        System.out.println("viewmyprofile 'useremail'");
+        System.out.println(
+                "searchprofile 'useremail1' 'useremail2' [useremail1 - administrator/recruiter , useremail2 - user]");
+        System.out.println("viewjobs");
+        System.out.println("viewmyappliedjobs 'useremail'");
+        // add more...
+        System.out.println(
+                "***********************************************************************************************************************");
 
-    public static Customer scanCustomerDetails() {
-        Customer customer = new Customer();
-        System.out.print("Enter your Name : ");
-        customer.setName(scanner.next());
-        System.out.print("Enter MobileNumber : ");
-        customer.setMobile_Number(scanner.next());
-        System.out.print("Enter House_No : ");
-        customer.setHouse_No(scanner.next());
-        System.out.print("Enter Street : ");
-        customer.setStreet(scanner.next());
-        System.out.print("Enter City : ");
-        customer.setCity(scanner.next());
-        System.out.println("Enter Password");
-        customer.setPassword(scanner.next());
-        // System.out.print("Enter TypeofConnection : ");
-        // customer.setCity(scanner.next());
-        // scanner.nextLine();
-        // System.out.print("Enter gender : ");
-        // customer.setGender(scanner.next());
-        // System.out.print("Enter mobile number : ");
-        // customer.setMobileNumber(scanner.next());
-        // scanner.nextLine();
-        // System.out.print("Enter qualification : ");
-        // customer.setQualification(scanner.nextLine());
-        // System.out.print("Enter college : ");
-        // customer.setCollege(scanner.nextLine());
-        // System.out.print("Enter percentage : ");
-        // customer.setPercentage(scanner.nextDouble());
-        // scanner.nextLine();
-        // System.out.print("Enter skill1 : ");
-        // customer.setSkill1(scanner.nextLine());
-        // System.out.print("Enter skill2 : ");
-        // customer.setSkill2(scanner.nextLine());
-        // System.out.print("Enter skill3 : ");
-        // customer.setSkill3(scanner.nextLine());
-        // System.out.print("Enter experience : ");
-        // customer.setExperience(scanner.nextInt());
-        customer.setLoginStatus(true);
-        return customer;
     }
 
-    // public static Recruiter scanRecruiterDetails(Recruiter recruiter) {
-    //     System.out.print("Enter First Name : ");
-    //     recruiter.setFirstName(scanner.next());
-    //     System.out.print("Enter Last Name : ");
-    //     recruiter.setLastName(scanner.next());
-    //     System.out.print("Enter Email : ");
-    //     recruiter.setEmail(scanner.next());
-    //     System.out.print("Enter Password : ");
-    //     recruiter.setPassword(scanner.next());
-    //     System.out.print("Enter Date Of Birth : ");
-    //     recruiter.setDateOfBirth(scanner.next());
+    public static void printUserLoginMenu() {
+        System.out.println("Enter 1 to login");
+        System.out.println("Enter 2 to Register");
+        System.out.println("Enter 0 to exit");
+    }
 
-    //     return recruiter;
+    public static void printCustomerMenu() {
+        System.out.println("1 : Profile");
+        System.out.println("2 : Bills");
+        System.out.println("3 : Logout");
+    }
+
+    public static void printProfileMenu() {
+        System.out.println("1 : View Profile");
+        System.out.println("2 : Modify Profile");
+        System.out.println("3 : Back");
+    }
+
+    // public static void printJobSeekerJobMenu() {
+    //     System.out.println("1 : View Jobs");
+    //     System.out.println("2 : Apply for Job");
+    //     System.out.println("3 : View Applied Jobs");
+    //     System.out.println("4 : view profile");
     // }
 
-    public static String scanPassword() {
-        System.out.print("Enter Password : ");
-        String password = scanner.next();
-        return password;
+    public static void printAdminMenu() {
+        System.out.println("1 : Profile");
+        // System.out.println("2 : Job");
+        // System.out.println("3 : Applications");
+        System.out.println("4 : Logout");
     }
 
-    public static int scanChoice() {
-        System.out.print("Enter Choice : ");
-        int choice = scanner.nextInt();
-        return choice;
-    }
-
-    // public static String scanEmail() {
-    //     System.out.print("Enter Email : ");
-    //     String email = scanner.next();
-    //     return email;
+    // public static void printRecruiterJobMenu() {
+    //     System.out.println("1 : View Jobs posted by You");
+    //     System.out.println("2 : Post a Job");
+    //     System.out.println("3 : Modify a Job Posting");
+    //     System.out.println("4 : Delete A Job Posting");
+    //     System.out.println("5 : Back");
     // }
+
+    public static void printApplicationsMenu() {
+
+    }
+
+    public static void printAdministratorMenu() {
+
+    }
+
+    // public static void printJobTitles(ArrayList<Job> jobList) {
+    //     int variable = 1;
+    //     for (Job job : jobList) {
+    //         System.out.println(variable + " : " + job.getJobTitle() + " ID" + job.getId());
+    //         variable++;
+    //     }
+    //     System.out.println(variable + " : View All");
+    // }
+
+    // public static void printJobDetails(Job job) {
+    //     System.out.println("Job Title : " + job.getJobTitle());
+    //     System.out.println("Job ID : " + job.getId());
+    //     System.out.println("Company Name : " + job.getCompanyName());
+    //     System.out.println("Location : " + job.getLocation());
+    //     System.out.println("Job Description : " + job.getDescription());
+    //     System.out.println("Skills : " + job.getSkillRequired());
+    //     System.out.println("Vacancies : " + job.getNumberOfVacancies());
+    //     System.out.println("Experience : " + job.getMinExperience());
+    //     System.out.println("Last Date : " + job.getDeadline());
+    // }
+
+    public static void printUpdatesRequirement(Customer customer) {
+        System.out.println("1. Update  Name");
+        System.out.println("2. Update  Mobile Number");
+        System.out.println("3. Update  House Number");
+        System.out.println("4. update  Street");
+        System.out.println("5. Update  City");
+        System.out.println("6. Update  Password");
+        System.out.println("7. Update  TypeOfConnection");
+        System.out.println("8. Back");
+        System.out.print("Choose your option :");
+    }
 }

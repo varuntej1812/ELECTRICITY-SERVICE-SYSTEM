@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\vivek\\Downloads\\mysql-connector-java-8.0.30.jar",
+        "c:\\Users\\vivek\\Downloads\\opencsv-3.8.jar"
+    ]
+}
