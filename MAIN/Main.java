@@ -53,8 +53,8 @@ public class Main {
                 adminregister(args[1]);
                 break;
             }
-            case "help": {
-                printHelp();
+            case "menu": {
+                printmenu();
                 break;
             }
             case "searchperson": {
@@ -115,8 +115,8 @@ public class Main {
         if (args.length == 0) {
             return null;
         } else if (args.length == 1) {
-            if (args[0].toLowerCase().equals("help"))
-                return "help";
+            if (args[0].toLowerCase().equals("menu"))
+                return "menu";
         } else if (args.length == 2) {
             if (args[0].toLowerCase().equals("logout"))
                 return "logout";
@@ -196,15 +196,13 @@ public class Main {
 
     public static void updatepersondetails(String Mobile_Number, String csvPath) throws SQLException {
         Person person = persondb.getPerson(Mobile_Number);
-        // Customer customer = (Customer) person;
-        // String UId = Mobile_Number + person.getHouse_No();
-        // Customer customer = customerdb.getCustomer(Mobile_Number, UId);
-        if (person.UpdatePerson(csvPath)) {
-            person.printperson();
-        } else {
-            System.out.println("Person Not Updated");
+        if (person.getLoginStatus().toLowerCase().equals("true")) {
+            if (person.UpdatePerson(csvPath)) {
+                person.printperson();
+            } else {
+                System.out.println("Person Not Updated");
+            }
         }
-
     }
 
     public static void login(String mobileNumber, String password) throws SQLException {
@@ -216,14 +214,6 @@ public class Main {
         else
             System.out.println("Login failed");
     }
-
-    // public static void registerAdmin(String csvPath) throws SQLException {
-    // admin = new Admin();
-    // if (admin.personRegister(csvPath)) {
-    // System.out.println("Registration successfull!");
-    // } else
-    // System.out.println("Registration failed");
-    // }
 
     public static void logout(String mobileNumber) throws SQLException {
         person = persondb.getPerson(mobileNumber);
@@ -307,17 +297,13 @@ public class Main {
     public static void knowbill(String BillId) throws SQLException {
         ArrayList<Bill> billlist = customerdb.getDueBillDetails(BillId);
         if (billlist.size() > 0) {
+            System.out.println(".......Bill Details......");
             for (Bill b : billlist) {
                 b.printbilldetails();
             }
         } else {
             System.out.println("No Due Bills");
         }
-
-    }
-
-    public static void updatedetails(String CSVpath) throws SQLException {
-
     }
 
     public static void paybill(String BillId) throws SQLException {
@@ -330,9 +316,9 @@ public class Main {
         }
     }
 
-    public static void printHelp() {
+    public static void printmenu() {
         System.out.println(
-                "'help'                                                -- prints all command line arguments you can use");
+                "'menu'                                                -- prints all command line arguments you can use");
         System.out.println(
                 "'login' [mobile number] [password]                    -- login using mobile number and password");
         System.out.println(
@@ -348,16 +334,13 @@ public class Main {
         System.out.println("'searchperson' [Mobile_Number]             --Search via primary key of person table ");
         System.out.println("'deleteperson'[Mobile_Number]              --Delete person via primary key");
         System.out.println("'searchvianame'[name]                      --Multiple Records with name");
+        System.out.println("'knowbill'[billid]                         --Print the bill if Not Paid");
+        System.out.println(
+                "'updatepersondetails'[Mobile_Number][csvpath]     --Updates Person details such as name,street,city");
+        System.out.println(
+                "'searchcustomer'[Mobile_Number][House_No]           --Searches Customer from customer table with UniqueNo");
+        System.out.println(
+                "'printallcustomers'[Mobile_Number][]        --Prints all the Customers only if you admin's login details");
+
     }
-
-    // class userInput {
-    // private static Scanner scanner = new Scanner(System.in);
-
-    // public static String scanPassword() {
-    // System.out.print("Enter Password : ");
-    // String Password = scanner.next();
-    // return Password;
-    // }
-    // }
-
 }

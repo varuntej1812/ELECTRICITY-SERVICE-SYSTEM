@@ -117,19 +117,10 @@ public abstract class Person {
             Li = reader.readNext();
             if (Li == null)
                 return false;
-            // while (Li != null) {
             this.setName(Li[0]);
-            // this.setHouse_No(Li[1]);
             this.setStreet(Li[1]);
             this.setCity(Li[2]);
-            // this.setMobile_Number(Li[4]);
-            // this.setTypeOfUser("customer");
-            // this.setLoginStatus("true");
-            // this.setTypeOfConnection(Li[5]);
-            // this.setPassword(Li[6]);
             return (persondb.updatedetails(this));
-            // }
-            // this.setUniqueNo(Stringeger.parseString(Li[7]));
         } catch (Exception e) {
             e.printStackTrace();
             return false;
