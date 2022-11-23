@@ -21,6 +21,8 @@ public class CustomerDB extends PersonDB {
         return !statement.execute(Query);
     }
 
+
+
     public Customer getCustomer(String Mobile_Number, String House_No) throws SQLException {
         String un = Mobile_Number + House_No;
         String Query = "Select * from person where Mobile_Number = '" + Mobile_Number + "'";
@@ -83,6 +85,28 @@ public class CustomerDB extends PersonDB {
         return null;
     }
 
+    public ArrayList<Bill> getDueBillDetails(String BillId) throws SQLException {
+        String Query = "Select * from Bill where BillId = '" + BillId + "'" + " and BillPayStatus = 'due'";
+        ResultSet rs = statement.executeQuery(Query);
+        ArrayList<Bill> billlist = new ArrayList<>();
+        while (rs.next()) {
+            Bill bill = new Bill();
+            bill.setUniqueNo(rs.getString("UniqueNo"));
+            bill.setBillId(rs.getString("BillId"));
+            String date = rs.getString("Billdate");
+            LocalDate D = LocalDate.parse(date);
+            bill.setBilldate(D);
+            bill.setAmount(rs.getInt("Amount"));
+            String duedate = rs.getString("Billduedate");
+            LocalDate dD = LocalDate.parse(duedate);
+            bill.setBillduedate(dD);
+            bill.setBillpaystatus(rs.getString("BillPayStatus"));
+            billlist.add(bill);
+            // return bill;
+        }
+        return billlist;
+    }
+
     // public String gettypeofconnection(String ) throws SQLException{
     // String Query = "Select "
     // }
@@ -117,6 +141,29 @@ public class CustomerDB extends PersonDB {
     public ArrayList<Bill> GetAllbillsgt(String Amount) throws SQLException {
         int amt = Integer.parseInt(Amount);
         String Query = "Select * from bill where Amount > '" + amt + "'";
+        ResultSet rs = statement.executeQuery(Query);
+        ArrayList<Bill> billlist = new ArrayList<>();
+        while (rs.next()) {
+            Bill bill = new Bill();
+            bill.setUniqueNo(rs.getString("UniqueNo"));
+            bill.setBillId(rs.getString("BillId"));
+            String date = rs.getString("Billdate");
+            LocalDate D = LocalDate.parse(date);
+            bill.setBilldate(D);
+            bill.setAmount(rs.getInt("Amount"));
+            String date1 = rs.getString("Billduedate");
+            LocalDate D1 = LocalDate.parse(date1);
+            bill.setBillduedate(D1);
+            bill.setBillpaystatus(rs.getString("BillPayStatus"));
+            billlist.add(bill);
+        }
+
+        return billlist;
+    }
+
+    public ArrayList<Bill> GetAllbillsst(String Amount) throws SQLException {
+        int amt = Integer.parseInt(Amount);
+        String Query = "Select * from bill where Amount < '" + amt + "'";
         ResultSet rs = statement.executeQuery(Query);
         ArrayList<Bill> billlist = new ArrayList<>();
         while (rs.next()) {

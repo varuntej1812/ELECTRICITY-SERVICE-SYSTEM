@@ -1,6 +1,11 @@
 package USER;
 
+import java.io.FileReader;
 import java.sql.*;
+
+import com.opencsv.CSVReader;
+
+import DATABASE.PersonDB;
 
 public abstract class Person {
     private String Name;
@@ -11,14 +16,6 @@ public abstract class Person {
     private String TypeOfUser;
     private String Password;
     private String LoginStatus;
-
-    @Override
-    public String toString() {
-        return "Person [Name=" + Name + ", MobileNumber=" + Mobile_Number + ", HouseNumber=" + House_No + ", Street="
-                + Street
-                + ", City=" + City + ", TypeOfUser=" + TypeOfUser + ",LoginStatus=" + LoginStatus + "]";
-
-    }
 
     public Person() {
 
@@ -109,6 +106,35 @@ public abstract class Person {
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public boolean UpdatePerson(String csv) throws SQLException {
+        PersonDB persondb = new PersonDB();
+        CSVReader reader = null;
+        try {
+            reader = new CSVReader(new FileReader(csv));
+            String Li[];
+            Li = reader.readNext();
+            if (Li == null)
+                return false;
+            // while (Li != null) {
+            this.setName(Li[0]);
+            // this.setHouse_No(Li[1]);
+            this.setStreet(Li[1]);
+            this.setCity(Li[2]);
+            // this.setMobile_Number(Li[4]);
+            // this.setTypeOfUser("customer");
+            // this.setLoginStatus("true");
+            // this.setTypeOfConnection(Li[5]);
+            // this.setPassword(Li[6]);
+            return (persondb.updatedetails(this));
+            // }
+            // this.setUniqueNo(Stringeger.parseString(Li[7]));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        // return false;
     }
 
     public abstract boolean personLogin(String Mobile_Number, String password) throws SQLException;

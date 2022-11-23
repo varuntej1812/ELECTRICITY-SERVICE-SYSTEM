@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.sql.*;
 import java.time.LocalDate;
 import DATABASE.CustomerDB;
+// import DATABASE.PersonDB;
 import USER.Person;
 import java.util.ArrayList;
 
@@ -127,6 +128,7 @@ public class Customer extends Person {
             Li = reader.readNext();
             if (Li == null)
                 return false;
+            // while (Li != null) {
             this.setName(Li[0]);
             this.setHouse_No(Li[1]);
             this.setStreet(Li[2]);
@@ -136,42 +138,45 @@ public class Customer extends Person {
             this.setLoginStatus("true");
             this.setTypeOfConnection(Li[5]);
             this.setPassword(Li[6]);
-            // this.setUniqueNo(Stringeger.parseString(Li[7]));
-
             return (CustDB.insertpersonrecord(this) && CustDB.InsertCustomerData(this));
+            // }
+            // this.setUniqueNo(Stringeger.parseString(Li[7]));
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-
+        // return false;
     }
 
-    public boolean UpdateCustomer(String csv) throws SQLException {
-        CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(csv));
-            String Li[];
-            Li = reader.readNext();
-            if (Li == null)
-                return false;
-            this.setName(Li[0]);
-            this.setHouse_No(Li[1]);
-            this.setStreet(Li[2]);
-            this.setCity(Li[3]);
-            // this.setMobile_Number(Li[4]);
-            this.setTypeOfUser("customer");
-            this.setLoginStatus("true");
-            this.setTypeOfConnection(Li[5]);
-            this.setPassword(Li[6]);
-            // this.setUniqueNo(Stringeger.parseString(Li[7]));
+    // public boolean UpdateCustomer(String Mobile_Number, String csv) throws SQLException {
+    //     CSVReader reader = null;
+    //     PersonDB persondb = new PersonDB();
+    //     Person person = persondb.getPerson(Mobile_Number);
+    //     // Customer customer = (Customer) person;
+    //     try {
+    //         reader = new CSVReader(new FileReader(csv));
+    //         String Li[];
+    //         Li = reader.readNext();
+    //         if (Li == null)
+    //             return false;
+    //         this.setName(Li[0]);
+    //         // this.setHouse_No(Li[1]);
+    //         this.setStreet(Li[1]);
+    //         this.setCity(Li[2]);
+    //         // this.setMobile_Number(Li[4]);
+    //         this.setTypeOfUser("customer");
+    //         this.setLoginStatus("true");
+    //         this.setTypeOfConnection(Li[5]);
+    //         // this.setPassword(Li[6]);
+    //         // this.setUniqueNo(Stringeger.parseString(Li[7]));
 
-            return (CustDB.insertpersonrecord(this) && CustDB.InsertCustomerData(this));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-
-    }
+    //         // return (CustDB.insertpersonrecord(this) && CustDB.InsertCustomerData(this));
+    //         return (persondb.updatedetails(this));
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return false;
+    //     }
+    // }
 
     public void getDetails() {
         System.out.println("Name :" + getName());

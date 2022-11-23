@@ -4,6 +4,7 @@ import java.sql.SQLException;
 // import java.util.Scanner;
 import java.util.ArrayList;
 
+import DATABASE.AdminDB;
 // import DATABASE.AdminDB;
 import DATABASE.CustomerDB;
 import DATABASE.PersonDB;
@@ -17,7 +18,7 @@ import USER.CUSTOMER.Customer;
 public class Main {
     private static PersonDB persondb = new PersonDB();
     private static CustomerDB customerdb = new CustomerDB();
-    // private static AdminDB admindb = new AdminDB();
+    private static AdminDB admindb = new AdminDB();
     private static Admin admin = new Admin();
     private static Person person;
     private static Customer customer;
@@ -25,6 +26,9 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         if (args.length > 0)
             executeCommandLineArguments(args);
+        else {
+            ;
+        }
     }
 
     public static void executeCommandLineArguments(String[] args) throws SQLException {
@@ -33,16 +37,16 @@ public class Main {
             return;
         }
         switch (function) {
+            case "register": {
+                register(args[1]);
+                break;
+            }
             case "login": {
                 login(args[1], args[2]);
                 break;
             }
             case "logout": {
                 logout(args[1]);
-                break;
-            }
-            case "register": {
-                register(args[1]);
                 break;
             }
             case "adminregister": {
@@ -81,12 +85,27 @@ public class Main {
             }
 
             case "printallcustomers": {
-                printallcustomers();
+                printallcustomers(args[1], args[2]);
                 break;
             }
 
             case "getbillgt": {
                 getbillgt(args[1]);
+                break;
+            }
+
+            case "getbillst": {
+                getbillst(args[1]);
+                break;
+            }
+
+            case "knowbill": {
+                knowbill(args[1]);
+                break;
+            }
+            case "updatepersondetails": {
+                updatepersondetails(args[1], args[2]);
+                break;
             }
 
         }
@@ -98,8 +117,6 @@ public class Main {
         } else if (args.length == 1) {
             if (args[0].toLowerCase().equals("help"))
                 return "help";
-            else if (args[0].toLowerCase().equals("printallcustomers"))
-                return "printallcustomers";
         } else if (args.length == 2) {
             if (args[0].toLowerCase().equals("logout"))
                 return "logout";
@@ -116,8 +133,12 @@ public class Main {
             else if (args[0].toLowerCase().equals("searchvianame"))
                 return "searchvianame";
             else if (args[0].toLowerCase().equals("getbillgt"))
-                ;
-            return "getbillgt";
+                return "getbillgt";
+            else if (args[0].toLowerCase().equals("getbillst"))
+                return "getbillst";
+            else if (args[0].toLowerCase().equals("knowbill"))
+                return "knowbill";
+
         }
 
         else if (args.length == 3) {
@@ -127,6 +148,10 @@ public class Main {
                 return "searchcustomer";
             } else if (args[0].toLowerCase().equals("generatebill"))
                 return "generatebill";
+            else if (args[0].toLowerCase().equals("printallcustomers"))
+                return "printallcustomers";
+            else if (args[0].toLowerCase().equals("updatepersondetails"))
+                return "updatepersondetails";
         }
         // // if (args[0].equalsIgnoreCase("addbuses"))
         // // return "addbuses";
@@ -138,12 +163,17 @@ public class Main {
         return null;
     }
 
-    public static void printallcustomers() throws SQLException {
+    public static void printallcustomers(String Mobile_Number, String password) throws SQLException {
         ArrayList<Customer> custlist = customerdb.GetAllCustomers();
-        for (Customer customer : custlist) {
-            customer.getDetails();
-            System.out.printf("\n\n");
+        admin = admindb.searchAdmin(Mobile_Number);
+        String Pass = admindb.getPersonPassword(Mobile_Number);
+        if (Pass.equals(password)) {
+            for (Customer customer : custlist) {
+                customer.getDetails();
+                System.out.printf("\n\n");
+            }
         }
+
     }
 
     public static void register(String csvPath) throws SQLException {
@@ -164,14 +194,18 @@ public class Main {
             System.out.println("Registration failed");
     }
 
-    // public static void UpdateCustomerDetails(String Mobile_Number, String
-    // csvPath) throws SQLException {
-    // Person person = persondb.getPerson(Mobile_Number);
-    // String UId = Mobile_Number + person.getHouse_No();
-    // Customer customer = customerdb.getCustomer(Mobile_Number, UId);
-    // if()
+    public static void updatepersondetails(String Mobile_Number, String csvPath) throws SQLException {
+        Person person = persondb.getPerson(Mobile_Number);
+        // Customer customer = (Customer) person;
+        // String UId = Mobile_Number + person.getHouse_No();
+        // Customer customer = customerdb.getCustomer(Mobile_Number, UId);
+        if (person.UpdatePerson(csvPath)) {
+            person.printperson();
+        } else {
+            System.out.println("Person Not Updated");
+        }
 
-    // }
+    }
 
     public static void login(String mobileNumber, String password) throws SQLException {
         person = persondb.getPerson(mobileNumber);
@@ -257,6 +291,35 @@ public class Main {
 
     }
 
+    public static void getbillst(String Amount) throws SQLException {
+        ArrayList<Bill> billlist = customerdb.GetAllbillsst(Amount);
+        if (billlist != null) {
+            for (Bill b : billlist) {
+                b.printbilldetails();
+                System.out.printf("\n\n");
+            }
+        } else {
+            System.out.println("No Bills with the given input");
+        }
+
+    }
+
+    public static void knowbill(String BillId) throws SQLException {
+        ArrayList<Bill> billlist = customerdb.getDueBillDetails(BillId);
+        if (billlist.size() > 0) {
+            for (Bill b : billlist) {
+                b.printbilldetails();
+            }
+        } else {
+            System.out.println("No Due Bills");
+        }
+
+    }
+
+    public static void updatedetails(String CSVpath) throws SQLException {
+
+    }
+
     public static void paybill(String BillId) throws SQLException {
         Bill bill = customerdb.getBillDetails(BillId);
         if (customerdb.UpdateBillPaymentStatus(bill)) {
@@ -274,11 +337,17 @@ public class Main {
                 "'login' [mobile number] [password]                    -- login using mobile number and password");
         System.out.println(
                 "'register' [csvfilepath]                              -- customer registeration using csv file");
+        System.out.println("'admin register' [csvfilepath]             -- admin registeration using csv file ");
         System.out.println("'logout' [mobile number]                                            -- person logout");
         System.out
                 .println(
                         "'generatebill' [Mobile_Number] [House_No]     -- Generates and prints the bill of the customer");
-        System.out.println("''");
+        System.out.println("'paybill' [Bill Id]                        -- Pay bill using BillId");
+        System.out.println("'getbillgt' [String Amount]                -- Get allbills greater than amount");
+        System.out.println("'getbillst' [String Amount]                -- Get allbills smaller than amount");
+        System.out.println("'searchperson' [Mobile_Number]             --Search via primary key of person table ");
+        System.out.println("'deleteperson'[Mobile_Number]              --Delete person via primary key");
+        System.out.println("'searchvianame'[name]                      --Multiple Records with name");
     }
 
     // class userInput {

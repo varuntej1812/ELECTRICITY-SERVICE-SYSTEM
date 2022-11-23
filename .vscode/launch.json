@@ -18,11 +18,11 @@
             "projectName": "OOP PROJECT_5bb9eac",
             "args": [
                 // "register",
-                // "C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\demo1.csv"
+                // "C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\entrycheck1.csv"
                 // "login","7680808622","1234"
                 // "generatebill",
-                // "7680808622",
-                // "2-14-32"
+                // "7894685369",
+                // "3-15-18"
                 // "register",
                 // "C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\demo2.csv"
                 // "C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\demo1.csv"
@@ -37,8 +37,16 @@
                 // "C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\ad1.csv"
                 // "printallcustomers"
                 // "deleteperson","9849736541"
-
-                "getbillgt","1000"
+                // "getbillst",
+                // "1000"
+                // "printallcustomers",
+                // "8465123393",
+                // "brim123"
+                // "help"
+                // "knowbill",
+                // "76808086222-14-322022-11-23"
+                // "generatebill",""
+                "updatepersondetails","7680808622","C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\updatepdetails.csv"
             ]
         }
     ]
