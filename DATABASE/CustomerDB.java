@@ -1,6 +1,7 @@
 package DATABASE;
 
 import java.sql.*;
+import java.time.LocalDate;
 // import java.util.ArrayList;
 import java.util.ArrayList;
 
@@ -10,19 +11,13 @@ import USER.CUSTOMER.Customer;
 public class CustomerDB extends PersonDB {
 
     public boolean InsertCustomerData(Customer C) throws SQLException {
-        // String connectionType;
-        // if (C.getTypeOfConnection() == 0) {
-        // connectionType = "Normal";
-        // } else {
-        // connectionType = "Solar";
-        // }
         String Query = "Insert INTO Customer values('" + C.getMobile_Number() + C.getHouse_No() + "','"
                 + C.getTypeOfConnection() + "')";
         return !statement.execute(Query);
     }
 
-    public boolean DeleteCustomerData(int UniqueNo) throws SQLException {
-        String Query = "Delete from Customer where UniqueNo = " + UniqueNo;
+    public boolean DeleteCustomerData(String UniqueNo) throws SQLException {
+        String Query = "Delete from Customer where UniqueNo = '" + UniqueNo + "'";
         return !statement.execute(Query);
     }
 
@@ -54,21 +49,92 @@ public class CustomerDB extends PersonDB {
         return null;
     }
 
+    public ArrayList<Customer> getPersonwName(String Name) throws SQLException {
+        String Query = "Select * from person where Name= '" + Name + "'";
+        rs = statement.executeQuery(Query);
+        ArrayList<Customer> custList = new ArrayList<>();
+        Customer customer = null;
+        while (rs.next()) {
+            customer = new Customer(rs.getString("Name"), rs.getString("Mobile_Number"), rs.getString("House_No"),
+                    rs.getString("Street"), rs.getString("City"), rs.getString("TypeOfUser"),
+                    rs.getString("LoginStatus"));
+            custList.add(customer);
+        }
+        return custList;
+    }
+
+    public Bill getBillDetails(String BillId) throws SQLException {
+        String Query = "Select * from Bill where BillId = '" + BillId + "'";
+        ResultSet rs = statement.executeQuery(Query);
+        Bill bill = new Bill();
+        if (rs.next()) {
+            bill.setUniqueNo(rs.getString("UniqueNo"));
+            bill.setBillId(rs.getString("BillId"));
+            String date = rs.getString("Billdate");
+            LocalDate D = LocalDate.parse(date);
+            bill.setBilldate(D);
+            bill.setAmount(rs.getInt("Amount"));
+            String duedate = rs.getString("Billduedate");
+            LocalDate dD = LocalDate.parse(duedate);
+            bill.setBillduedate(dD);
+            bill.setBillpaystatus(rs.getString("BillPayStatus"));
+            return bill;
+        }
+        return null;
+    }
+
+    // public String gettypeofconnection(String ) throws SQLException{
+    // String Query = "Select "
+    // }
+
     public ArrayList<Customer> GetAllCustomers() throws SQLException {
-        String Query = "select * from Customer'";
+        String Query = "select * from Person where TypeOfUser = 'customer'";
         ResultSet rs = statement.executeQuery(Query);
         ArrayList<Customer> ListCustomers = new ArrayList<Customer>();
-        Customer customer = new Customer();
         while (rs.next()) {
+            Customer customer = new Customer();
             // customer.setUniqueNo(rs.getString("UniqueNo"));
             customer.setName(rs.getString("Name"));
-            customer.setMobile_Number(rs.getString("MobileNumber"));
+            customer.setMobile_Number(rs.getString("Mobile_Number"));
             customer.setHouse_No(rs.getString("House_No"));
             customer.setUniqueNo();
             customer.setStreet(rs.getString("Street"));
             customer.setCity(rs.getString("City"));
+            ListCustomers.add(customer);
+        }
+        rs.close();
+        for (int i = 0; i < ListCustomers.size(); i++) {
+            String Query1 = "select TypeOfConnection from Customer where UniqueNo = '"
+                    + ListCustomers.get(i).getUniqueNo() + "'";
+            ResultSet rs1 = statement.executeQuery(Query1);
+            if (rs1.next()) {
+                ListCustomers.get(i).setTypeOfConnection(rs1.getString("TypeOfConnection"));
+            }
         }
         return ListCustomers;
+    }
+
+    public ArrayList<Bill> GetAllbillsgt(String Amount) throws SQLException {
+        int amt = Integer.parseInt(Amount);
+        String Query = "Select * from bill where Amount > '" + amt + "'";
+        ResultSet rs = statement.executeQuery(Query);
+        ArrayList<Bill> billlist = new ArrayList<>();
+        while (rs.next()) {
+            Bill bill = new Bill();
+            bill.setUniqueNo(rs.getString("UniqueNo"));
+            bill.setBillId(rs.getString("BillId"));
+            String date = rs.getString("Billdate");
+            LocalDate D = LocalDate.parse(date);
+            bill.setBilldate(D);
+            bill.setAmount(rs.getInt("Amount"));
+            String date1 = rs.getString("Billduedate");
+            LocalDate D1 = LocalDate.parse(date1);
+            bill.setBillduedate(D1);
+            bill.setBillpaystatus(rs.getString("BillPayStatus"));
+            billlist.add(bill);
+        }
+
+        return billlist;
     }
 
     // public ArrayList<Bill> GetAllBills() throws SQLException{
@@ -99,65 +165,20 @@ public class CustomerDB extends PersonDB {
     // return statement.execute(Query);
     // }
 
-    // public Customer getCustomer(int UniqueNo) throws SQLException {
-    // String Query = "Select * from Customer where UniqueNo = " + UniqueNo;
-    // ResultSet rs = statement.executeQuery(Query);
-    // Customer C = new Customer();
-    // C.setName(rs.getString("Name"));
-    // C.setHouse_No(rs.getString("House_No"));
-    // C.setStreet(rs.getString("Street"));
-    // C.setCity(rs.getString("City"));
-    // C.setMobile_Number(rs.getString("MobileNumber"));
-    // C.setUniqueNo(rs.getInt("UniqueNo"));
-    // C.setTypeOfConnection(rs.getString("Connection Type"));
-    // return C;
-    // }
-
-    // public Customer getCustomerDetails(String Mobile_Number) throws SQLException
-    // {
-    // String Query = "Select * from Customer where MobileNumber = " +
-    // Mobile_Number;
-    // ResultSet rs = statement.executeQuery(Query);
-    // Customer C = new Customer();
-    // C.setName(rs.getString("Name"));
-    // C.setHouse_No(rs.getString("House_No"));
-    // C.setStreet(rs.getString("Street"));
-    // C.setCity(rs.getString("City"));
-    // C.setMobile_Number(rs.getString("MobileNumber"));
-    // C.setUniqueNo(rs.getInt("UniqueNo"));
-    // C.setTypeOfConnection(rs.getInt("Connection Type"));
-    // return C;
-    // }
-
-    // public Customer getCustomer(String mobile_Number) throws SQLException {
-    // String Query = "Select * from Customer where MobileNumber =" + mobile_Number;
-    // ResultSet rs = statement.executeQuery(Query);
-    // if (rs.next()) {
-    // Customer customer = new Customer();
-    // customer.setName(rs.getString("Name"));
-    // customer.setHouse_No(rs.getString("House_No"));
-    // customer.setStreet(rs.getString("Street"));
-    // customer.setCity(rs.getString("City"));
-    // customer.setMobile_Number(rs.getString("MobileNumber"));
-    // customer.setUniqueNo(rs.getInt("UniqueNo"));
-    // customer.setTypeOfConnection(rs.getString("TypeOfConnection"));
-    // return customer;
-    // } else {
-    // System.out.println("Record Not Found");
-    // return null;
-    // }
-
-    // }
-
     public boolean InsertBillRecord(Bill B) throws SQLException {
-        String Query = "Insert INTO Bill values('" + B.getUniqueNo() + "','" + B.getBillId() + "','" + B.getDatetime()
-                + "','" + B.getAmount() + "','" + B.getBillpaystatus() + "')";
+        String Query = "Insert INTO Bill values('" + B.getUniqueNo() + "','" + B.getBillId() + "','" + B.getBilldate()
+                + "','" + B.getAmount() + "','" + B.getBillduedate() + "','" + B.getBillpaystatus() + "')";
         return !statement.execute(Query);
     }
 
-    public boolean UpadateBillPaymentStatus(Bill B) throws SQLException {
-        String Query = "Update Bill set Billpaystatus= 'paid' where BillId = " + B.getBillId();
+    public boolean UpdateBillPaymentStatus(Bill B) throws SQLException {
+        String Query = "Update Bill set Billpaystatus= 'paid' where BillId = '" + B.getBillId() + "'";
         return !statement.execute(Query);
     }
+
+    // public boolean UpdateCustomerName(String Mobile_Number) {
+
+    // // String Query = "Update Bill set Name = '" +
+    // }
 
 }

@@ -7,20 +7,39 @@ import java.util.Random;
 public class Bill {
     private String UniqueNo;
     private String BillId;
-    private Double Amount;
-    private LocalDate datetime;
+    private int Amount;
+    private LocalDate billdate;
+    private LocalDate billduedate;
     private String Billpaystatus;
 
     public Bill() {
 
     }
 
-    public Bill(String uniqueNo, String billId, Double amount, LocalDate datetime, String billpaystatus) {
+    public Bill(String uniqueNo, String billId, int amount, LocalDate billdate, LocalDate billduedate,
+            String billpaystatus) {
         UniqueNo = uniqueNo;
         BillId = billId;
         Amount = amount;
-        this.datetime = datetime;
+        this.billdate = billdate;
+        this.billduedate = billduedate;
         Billpaystatus = billpaystatus;
+    }
+
+    public LocalDate getBilldate() {
+        return billdate;
+    }
+
+    public void setBilldate(LocalDate billdate) {
+        this.billdate = billdate;
+    }
+
+    public LocalDate getBillduedate() {
+        return billduedate;
+    }
+
+    public void setBillduedate(LocalDate billdate) {
+        this.billduedate = billdate.plusDays(15);
     }
 
     public String getBillId() {
@@ -31,88 +50,70 @@ public class Bill {
         BillId = billId;
     }
 
-    public Double getAmount() {
+    public int getAmount() {
         return Amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(int amount) {
         Amount = amount;
     }
 
-    public LocalDate getDatetime() {
-        return datetime;
-    }
-
-    public void setDatetime(LocalDate localDate) {
-        this.datetime = localDate;
-    }
-
-    public void GenerateBillID(String UniqueNo, LocalDate datetime) {
-        String bId = UniqueNo + "" + datetime;
+    public void GenerateBillID(String UniqueNo, LocalDate billdate) {
+        String bId = UniqueNo + "" + billdate;
         setBillId(bId);
-        setDatetime(LocalDate.now());
+        setBilldate(LocalDate.now());
     }
 
-    // public String[] getBillsArr() {
-    // return billsArr;
-    // }
-
-    // public void setBillsArr(String[] billsArr) {
-    // this.billsArr = billsArr;
-    // }
-
-    // String[] billsArr = new String[100];
-
-    public double calculateBill(Customer c) {
+    public int calculateBill(Customer c) {
         if (c.getTypeOfConnection().equalsIgnoreCase("normal")) {
-            float units = new Random().nextInt(1000);
-            double billpay = 0;
+            int units = new Random().nextInt(1000);
+            int billpay = 0;
             if (units < 100) {
-                billpay = units * 1.20;
+                billpay = (int) (units * 1.20);
                 if (billpay < 80) {
                     billpay = 80;
                 }
             } else if (units < 300) {
-                billpay = 100 * 1.20 + (units - 100) * 2;
+                billpay = (int) (100 * 1.20 + (units - 100) * 2);
             }
 
             else if (units > 300) {
-                billpay = 100 * 1.20 + 200 * 2 + (units - 300) * 3;
+                billpay = (int) (100 * 1.20 + 200 * 2 + (units - 300) * 3);
             }
             setAmount(billpay);
-            setDatetime(LocalDate.now());
+            setBilldate(LocalDate.now());
             // System.out.prStringln("Bill to pay : " + billpay);
             return billpay;
         }
 
         else if (c.getTypeOfConnection().equalsIgnoreCase("solar")) {
-            double billpay = 0;
-            float unitsCons = new Random().nextInt(1000);
-            float unitsProd = new Random().nextInt(1000);
+            int billpay = 0;
+            int unitsCons = new Random().nextInt(1000);
+            int unitsProd = new Random().nextInt(1000);
 
             if (unitsCons > unitsProd) {
-                float netUnits;
+                int netUnits;
                 netUnits = unitsCons - unitsProd;
                 if (netUnits < 100) {
-                    billpay = netUnits * 1.20;
+                    billpay = (int) (netUnits * 1.20);
                 } else if (netUnits < 300) {
-                    billpay = 100 * 1.2 + (netUnits - 100) * 2;
+                    billpay = (int) (100 * 1.2 + (netUnits - 100) * 2);
                 } else if (netUnits > 300) {
-                    billpay = 100 * 1.2 + 200 * 2 + (netUnits - 300) * 3;
+                    billpay = (int) (100 * 1.2 + 200 * 2 + (netUnits - 300) * 3);
                 }
             } else {
-                float netUnits;
+                int netUnits;
                 netUnits = unitsProd - unitsCons;
                 if (netUnits < 100) {
-                    billpay = -(netUnits * 1.20);
+                    billpay = (int) -(netUnits * 1.20);
                 } else if (netUnits < 300) {
-                    billpay = -(100 * 1.2 + (netUnits - 100) * 2);
+                    billpay = (int) -(100 * 1.2 + (netUnits - 100) * 2);
                 } else if (netUnits > 300) {
-                    billpay = -(100 * 1.2 + 200 * 2 + (netUnits - 300) * 3);
+                    billpay = (int) -(100 * 1.2 + 200 * 2 + (netUnits - 300) * 3);
                 }
             }
             setAmount(billpay);
-            setDatetime(LocalDate.now());
+            setBilldate(LocalDate.now());
             return billpay;
         }
         return 0;
@@ -142,8 +143,12 @@ public class Bill {
         }
     }
 
-    public void prStringbilldetails() throws SQLException{
-  
-
+    public void printbilldetails() throws SQLException {
+        System.out.println("UniqueNo: " + getUniqueNo());
+        System.out.println("BillId: " + getBillId());
+        System.out.println("Bill Date: " + getBilldate());
+        System.out.println("Bill Amount: " + getAmount());
+        System.out.println("Bill due date: " + getBillduedate());
+        System.out.println("Bill pay Status: " + getBillpaystatus());
     }
 }

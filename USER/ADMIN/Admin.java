@@ -1,12 +1,16 @@
 package USER.ADMIN;
 
+import java.io.FileReader;
 // import java.io.FileReader;
 import java.sql.SQLException;
 // import java.util.*;
 
+import com.opencsv.CSVReader;
+
 // import com.opencsv.CSVReader;
 
 import DATABASE.AdminDB;
+import DATABASE.PersonDB;
 import USER.Person;
 
 public class Admin extends Person {
@@ -14,9 +18,10 @@ public class Admin extends Person {
     // private String AdminID;
 
     private static AdminDB adminDB = new AdminDB();
+    private static PersonDB persondb = new PersonDB();
 
     public Admin() {
-        super.setTypeOfUser("Admin");
+        // super.setTypeOfUser("Admin");
     }
 
     public Admin(String name, String mobile_Number, String house_No, String street, String city, String typeOfUser,
@@ -25,14 +30,16 @@ public class Admin extends Person {
     }
 
     // public Admin(String adminID) {
-    //     AdminID = adminID;
+    // AdminID = adminID;
     // }
 
-    public Admin(String name, String mobile_Number, String house_No, String street, String city, String typeOfUser,
-            String password, String loginStatus, String adminID) {
-        super(name, mobile_Number, house_No, street, city, typeOfUser, password, loginStatus);
-        // AdminID = adminID;
-    }
+    // public Admin(String name, String mobile_Number, String house_No, String
+    // street, String city, String typeOfUser,
+    // String password, String loginStatus, String adminID) {
+    // super(name, mobile_Number, house_No, street, city, typeOfUser, password,
+    // loginStatus);
+    // // AdminID = adminID;
+    // }
 
     // private static DATABASE.AdminDB AdDB = new DATABASE.AdminDB();
 
@@ -45,11 +52,11 @@ public class Admin extends Person {
     // }
 
     // public String getAdminID() {
-    //     return AdminID;
+    // return AdminID;
     // }
 
     // public void setAdminID(String adminID) {
-    //     AdminID = adminID;
+    // AdminID = adminID;
     // }
 
     // public boolean Registration() throws SQLException {
@@ -143,40 +150,49 @@ public class Admin extends Person {
         return adminDB.updateUserLoginStatus(Mobile_Number, "false");
     }
 
+    // @Override
+    // public boolean personRegister(String csv) throws SQLException {
+
+    // return false;
+    // }
+
     @Override
     public boolean personRegister(String csv) throws SQLException {
-      
-        return false;
+
+        CSVReader reader = null;
+        try {
+            reader = new CSVReader(new FileReader(csv));
+            String Li[];
+            Li = reader.readNext();
+            if (Li == null)
+                return false;
+            this.setName(Li[0]);
+            this.setMobile_Number(Li[1]);
+            this.setHouse_No(Li[2]);
+            this.setStreet(Li[3]);
+            this.setCity(Li[4]);
+            this.setTypeOfUser("admin");
+            this.setPassword(Li[5]);
+            this.setLoginStatus("true");
+            return (persondb.insertpersonrecord(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void getDetails() {
+        System.out.println("Name :" + getName());
+        System.out.println("Mobile_Number : " + getMobile_Number());
+        System.out.println("House Number: " + getHouse_No());
+        System.out.println("Street : " + getStreet());
+        System.out.println("City : " + getCity());
+        System.out.println("Type of User: " + getTypeOfUser());
     }
 
     // @Override
-    // public boolean personRegister(String csv) throws SQLException {
-        
-    //     CSVReader reader = null;
-    //     try {
-    //         reader = new CSVReader(new FileReader(csv));
-    //         String Li[];
-    //         Li = reader.readNext();
-    //         if (Li == null)
-    //             return false;
-    //         this.setName(Li[0]);
-    //         this.setMobile_Number(Li[1]);
-    //         this.setHouse_No(Li[2]);
-    //         this.setStreet(Li[3]);
-    //         this.setCity(Li[4]);
-    //         this.setTypeOfUser(Li[5]);
-    //         this.setPassword(Li[6]);
-    //         // this.setAdminID(Li[7]);
-    //         return (adminDB.InsertAdminData(this));
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return false;
-    //     }
-    // }
-
-    // @Override
     // public boolean personRegister(String csv) throws SQLException{
-    //     return false;
+    // return false;
     // }
 
     // public boolean deleteUser() throws SQLException {

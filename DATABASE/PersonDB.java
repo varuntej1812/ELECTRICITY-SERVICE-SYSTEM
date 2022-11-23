@@ -1,6 +1,7 @@
 package DATABASE;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import USER.Person;
 import USER.ADMIN.Admin;
@@ -83,13 +84,21 @@ public class PersonDB {
         return person;
     }
 
+
+
     // public boolean UpdateCustomer(String Mobile_Number) throws SQLException{
-    //     String Query = "Update "
+    // String Query = "Update "
     // }
 
-    public void printperson(Person P) {
-        System.out.println("Name:" + P.getName() + "Mobile_Number" + P.getMobile_Number() + "HouseNo" + P.getHouse_No()
-                + "Street:" + P.getStreet() + "City:" + P.getCity());
-    }
+    // public void printperson() {
+    // System.out.println("Name :" + getName());
+    // System.out.println("Mobile_Number : " + getMobile_Number());
+    // System.out.println("House Number: " + getHouse_No());
+    // System.out.println("Street : " + getStreet());
+    // System.out.println("City : " + getCity());
+    // System.out.println("Name:" + P.getName() + "Mobile_Number" +
+    // P.getMobile_Number() + "HouseNo" + P.getHouse_No()
+    // + "Street:" + P.getStreet() + "City:" + P.getCity());
+    // }
 
 }

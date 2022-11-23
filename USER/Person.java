@@ -25,6 +25,17 @@ public abstract class Person {
     }
 
     public Person(String name, String mobile_Number, String house_No, String street, String city, String typeOfUser,
+            String LoginStatus) {
+        Name = name;
+        Mobile_Number = mobile_Number;
+        House_No = house_No;
+        Street = street;
+        City = city;
+        TypeOfUser = typeOfUser;
+        this.LoginStatus = LoginStatus;
+    }
+
+    public Person(String name, String mobile_Number, String house_No, String street, String city, String typeOfUser,
             String password, String loginStatus) {
         Name = name;
         Mobile_Number = mobile_Number;
@@ -105,8 +116,16 @@ public abstract class Person {
     public abstract boolean personLogout(String Mobile_Number) throws SQLException;
 
     public abstract boolean personRegister(String csv) throws SQLException;
-    // public abstract boolean Registration() throws SQLException;
 
     // public abstract boolean deleteUser() throws SQLException;
+    public void printperson() {
+        System.out.println("Name : " + getName());
+        System.out.println("Mobile_Number : " + getMobile_Number());
+        System.out.println("House Number: " + getHouse_No());
+        System.out.println("Street : " + getStreet());
+        System.out.println("City : " + getCity());
+        System.out.println("Type Of User : " + getTypeOfUser());
+        System.out.println("Login Status : " + getLoginStatus());
+    }
 
 }
