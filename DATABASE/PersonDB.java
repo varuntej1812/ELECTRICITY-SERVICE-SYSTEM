@@ -1,9 +1,6 @@
 package DATABASE;
 
 import java.sql.*;
-// import java.util.ArrayList;
-
-// import com.mysql.cj.protocol.a.BooleanValueEncoder;
 
 import USER.Person;
 import USER.ADMIN.Admin;
@@ -40,7 +37,6 @@ public class PersonDB {
         String Query = "Update person set Name = '" + P.getName() + "'," + "Street = '" + P.getStreet() + "',"
                 + "City = '" + P.getCity() + "' " + "where Mobile_Number = '" + P.getMobile_Number() + "'";
         return !statement.execute(Query);
-
     }
 
     public boolean deletepersonrecord(Person person) throws SQLException {
@@ -73,11 +69,6 @@ public class PersonDB {
         return !statement.execute(Query);
     }
 
-    // public boolean updateuserdetails(String mobileNumber) throws SQLException {
-    // Customer customer = new Customer();
-
-    // }
-
     public Person getPerson(String Mobile_Number) throws SQLException {
         String Query = "select * from person where Mobile_Number = '" + Mobile_Number + "'";
         rs = statement.executeQuery(Query);
@@ -97,20 +88,5 @@ public class PersonDB {
 
         return person;
     }
-
-    // public boolean UpdateCustomer(String Mobile_Number) throws SQLException{
-    // String Query = "Update "
-    // }
-
-    // public void printperson() {
-    // System.out.println("Name :" + getName());
-    // System.out.println("Mobile_Number : " + getMobile_Number());
-    // System.out.println("House Number: " + getHouse_No());
-    // System.out.println("Street : " + getStreet());
-    // System.out.println("City : " + getCity());
-    // System.out.println("Name:" + P.getName() + "Mobile_Number" +
-    // P.getMobile_Number() + "HouseNo" + P.getHouse_No()
-    // + "Street:" + P.getStreet() + "City:" + P.getCity());
-    // }
 
 }

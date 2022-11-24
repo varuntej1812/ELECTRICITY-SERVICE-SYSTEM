@@ -21,8 +21,6 @@ public class CustomerDB extends PersonDB {
         return !statement.execute(Query);
     }
 
-
-
     public Customer getCustomer(String Mobile_Number, String House_No) throws SQLException {
         String un = Mobile_Number + House_No;
         String Query = "Select * from person where Mobile_Number = '" + Mobile_Number + "'";
@@ -194,24 +192,6 @@ public class CustomerDB extends PersonDB {
     // }
     // }
 
-    // public String GetUserPass(int UniqueID) throws SQLException {
-    // String Query = "Select Password from Customer where UniqueNo = " + UniqueID;
-    // ResultSet rs = statement.executeQuery(Query);
-    // if (rs.next()) {
-    // return rs.getString("Password");
-    // } else {
-    // return null;
-    // }
-
-    // }
-
-    // public boolean updateUserLoginStatus(int UniqueID, Boolean status) throws
-    // SQLException {
-    // String Query = "update user set loginstatus =" + status + "where UniqueNo =
-    // '" + UniqueID + "';";
-    // return statement.execute(Query);
-    // }
-
     public boolean InsertBillRecord(Bill B) throws SQLException {
         String Query = "Insert INTO Bill values('" + B.getUniqueNo() + "','" + B.getBillId() + "','" + B.getBilldate()
                 + "','" + B.getAmount() + "','" + B.getBillduedate() + "','" + B.getBillpaystatus() + "')";
@@ -222,10 +202,5 @@ public class CustomerDB extends PersonDB {
         String Query = "Update Bill set Billpaystatus= 'paid' where BillId = '" + B.getBillId() + "'";
         return !statement.execute(Query);
     }
-
-    // public boolean UpdateCustomerName(String Mobile_Number) {
-
-    // // String Query = "Update Bill set Name = '" +
-    // }
 
 }

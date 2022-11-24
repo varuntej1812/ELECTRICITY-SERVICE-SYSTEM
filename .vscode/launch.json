@@ -17,6 +17,7 @@
             "mainClass": "Main",
             "projectName": "OOP PROJECT_5bb9eac",
             "args": [
+                // "menu"
                 // "register",
                 // "C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\entrycheck1.csv"
                 // "login","7680808622","1234"
@@ -40,9 +41,8 @@
                 // "getbillst",
                 // "1000"
                 // "printallcustomers",
-                // "8465123393",
+                // "8465123392",
                 // "brim123"
-                // "help"
                 // "knowbill",
                 // "76808086222-14-322022-11-23"
                 // "generatebill",""
@@ -50,8 +50,29 @@
                 // "generatebill",
                 // "9063247838",
                 // "3-16-18"
-                "knowbill",
-                "76808086222-14-322022-11-23"
+                // "knowbill",
+                // "76808086222-14-322022-11-23"
+                // "register",
+                // "C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\demo1.csv"
+                // "generatebill","9849736541","4-15-35"
+                // "menu"
+                //  "getbillgt","200"
+                // "menu"
+                // "login",
+                // "9849736541",
+                // "123"
+                // "searchperson","9849736541"
+                // "generatebill","9849736541","4-15-35"
+                // "logout","9849736541"
+
+
+
+
+                // "menu"
+                // "register","C:\\Users\\vivek\\OneDrive\\Desktop\\csvfiles\\registerevaluate.csv"
+                // "login","6301234596","Somu9352"
+                // "generatebill","6301234596","6-25-21"
+                //
             ]
         }
     ]

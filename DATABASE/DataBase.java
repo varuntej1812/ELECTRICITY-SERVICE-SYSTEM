@@ -40,22 +40,4 @@ public class DataBase {
     public void setPASS(String pASS) {
         PASS = pASS;
     }
-
-    // private Connection connection;
-    // private DataBase database;
-    // protected Statement stmt;
-    // protected ResultSet resultSet;
-
-    // public DataBase() {
-    // // database = new DataBase();
-
-    // try {
-    // connection = DriverManager.getConnection(DB_URL, USER, PASS);
-    // stmt = connection.createStatement();
-    // } catch (SQLException e) {
-
-    // e.printStackTrace();
-    // }
-    // }
-
 }

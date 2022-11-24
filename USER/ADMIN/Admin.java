@@ -25,7 +25,7 @@ public class Admin extends Person {
         String Pass = adminDB.getPersonPassword(Mobile_Number);
         // String Pass = admin.getPassword();
         if (Pass.equals(Password)) {
-            // return true;
+
             this.setLoginStatus("true");
             // adminDB.updateUserLoginStatus(getAdminID(), getLoginStatus());
             return true;
@@ -39,12 +39,6 @@ public class Admin extends Person {
         this.setLoginStatus("false");
         return adminDB.updateUserLoginStatus(Mobile_Number, "false");
     }
-
-    // @Override
-    // public boolean personRegister(String csv) throws SQLException {
-
-    // return false;
-    // }
 
     @Override
     public boolean personRegister(String csv) throws SQLException {
@@ -80,13 +74,4 @@ public class Admin extends Person {
         System.out.println("Type of User: " + getTypeOfUser());
     }
 
-    // @Override
-    // public boolean personRegister(String csv) throws SQLException{
-    // return false;
-    // }
-
-    // public boolean deleteUser() throws SQLException {
-    // return(AdminDB.deleteUserRecord(this) &&
-    // AdminDB.deleteAdministratorRecord(this));
-    // }
 }

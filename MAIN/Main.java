@@ -27,7 +27,7 @@ public class Main {
         if (args.length > 0)
             executeCommandLineArguments(args);
         else {
-            ;
+            return;
         }
     }
 
@@ -153,12 +153,6 @@ public class Main {
             else if (args[0].toLowerCase().equals("updatepersondetails"))
                 return "updatepersondetails";
         }
-        // // if (args[0].equalsIgnoreCase("addbuses"))
-        // // return "addbuses";
-        // } else if (args.length == 4) {
-        // // if (args[0].equalsIgnoreCase("bookticket"))
-        // // return "bookticket";
-        // }
 
         return null;
     }
@@ -167,11 +161,15 @@ public class Main {
         ArrayList<Customer> custlist = customerdb.GetAllCustomers();
         admin = admindb.searchAdmin(Mobile_Number);
         String Pass = admindb.getPersonPassword(Mobile_Number);
-        if (Pass.equals(password)) {
-            for (Customer customer : custlist) {
-                customer.getDetails();
-                System.out.printf("\n\n");
+        if (admin != null & Pass != null) {
+            if (Pass.equals(password)) {
+                for (Customer customer : custlist) {
+                    customer.getDetails();
+                    System.out.printf("\n\n");
+                }
             }
+        } else {
+            System.out.println("No valid details");
         }
 
     }
@@ -323,24 +321,28 @@ public class Main {
                 "'login' [mobile number] [password]                    -- login using mobile number and password");
         System.out.println(
                 "'register' [csvfilepath]                              -- customer registeration using csv file");
-        System.out.println("'admin register' [csvfilepath]             -- admin registeration using csv file ");
-        System.out.println("'logout' [mobile number]                                            -- person logout");
         System.out
                 .println(
-                        "'generatebill' [Mobile_Number] [House_No]     -- Generates and prints the bill of the customer");
-        System.out.println("'paybill' [Bill Id]                        -- Pay bill using BillId");
-        System.out.println("'getbillgt' [String Amount]                -- Get allbills greater than amount");
-        System.out.println("'getbillst' [String Amount]                -- Get allbills smaller than amount");
-        System.out.println("'searchperson' [Mobile_Number]             --Search via primary key of person table ");
-        System.out.println("'deleteperson'[Mobile_Number]              --Delete person via primary key");
-        System.out.println("'searchvianame'[name]                      --Multiple Records with name");
-        System.out.println("'knowbill'[billid]                         --Print the bill if Not Paid");
+                        "'admin register' [csvfilepath]                        -- admin registeration using csv file ");
+        System.out.println("'logout' [mobile number]                               -- person logout");
+        System.out
+                .println(
+                        "'generatebill' [Mobile_Number] [House_No]           -- Generates and prints the bill of the customer");
+        System.out.println("'paybill' [Bill Id]                                -- Pay bill using BillId");
+        System.out.println("'getbillgt' [String Amount]                        -- Get allbills greater than amount");
+        System.out.println("'getbillst' [String Amount]                        -- Get allbills smaller than amount");
+        System.out
+                .println(
+                        "'searchperson' [Mobile_Number]                     --Search via primary key of person table ");
+        System.out.println("'deleteperson'[Mobile_Number]                      --Delete person via primary key");
+        System.out.println("'searchvianame'[name]                              --Multiple Records with name");
+        System.out.println("'knowbill'[billid]                                 --Print the bill if Not Paid");
         System.out.println(
-                "'updatepersondetails'[Mobile_Number][csvpath]     --Updates Person details such as name,street,city");
+                "'updatepersondetails'[Mobile_Number][csvpath]      --Updates Person details such as name,street,city");
         System.out.println(
                 "'searchcustomer'[Mobile_Number][House_No]           --Searches Customer from customer table with UniqueNo");
         System.out.println(
-                "'printallcustomers'[Mobile_Number][]        --Prints all the Customers only if you admin's login details");
+                "'printallcustomers'[Mobile_Number][Password]        --Prints all the Customers only if you enter admin's login details");
 
     }
 }
